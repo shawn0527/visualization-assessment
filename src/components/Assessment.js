@@ -21,10 +21,10 @@ query($metricName: String!) {
 }
 `;
 
-const getMetrics = state => {
-    debugger
-  console.log(state)
-  const { metric, at, value, unit } = state.weather;
+const getMetric = state => {
+console.log(state)
+console.log(state.measurement)
+  const { metric, at, value, unit } = state.measurement;
   return {
     metric,
     at,
@@ -43,12 +43,12 @@ export default () => {
 
 
 const Assessment = () => {
-  const getLastKnownMeasurement = getMetrics();
+//   const getLastKnownMeasurement = getMetrics();
 //   // Default to houston
   const metricName = "tubingPressure";
   const dispatch = useDispatch();
   const { metric, at, value, unit } = useSelector(
-    getLastKnownMeasurement
+    getMetric
   );
 
   const [result] = useQuery({
@@ -66,8 +66,9 @@ const Assessment = () => {
         return;
       }
       if (!data) return;
+      console.log(data)
       const { getLastKnownMeasurement } = data;
-      dispatch({ type: actions.WEATHER_DATA_RECEIVED, getLastKnownMeasurement });
+      dispatch({ type: actions.MEASUREMENT_DATA_RECEIVED, getLastKnownMeasurement });
     },
     [dispatch, data, error]
   );
@@ -75,8 +76,6 @@ const Assessment = () => {
   if (fetching) return <LinearProgress />;
 
   return (
-    <Chip
-      label={data}
-    />
+    <Chip label={`${metric} is ${value} ${unit}`}/>
   );
 };

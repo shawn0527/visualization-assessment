@@ -8,7 +8,7 @@ import assessmentReducer from "./reducers/Assessment";
 export default () => {
   const rootReducer = combineReducers({
     weather: weatherReducer,
-    assessment: assessmentReducer
+    measurement: assessmentReducer
   });
 
   const composeEnhancers = composeWithDevTools({});

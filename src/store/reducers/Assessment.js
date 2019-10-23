@@ -7,9 +7,7 @@ const initialState = {
   unit: ""
 };
 
-
-const metricDataRecevied = (state, action) => {
-    debugger
+const measurementDataRecevied = (state, action) => {
   const { getLastKnownMeasurement } = action;
   const {
     metric,
@@ -27,7 +25,7 @@ const metricDataRecevied = (state, action) => {
 };
 
 const handlers = {
-  [actions.WEATHER_DATA_RECEIVED]: metricDataRecevied
+  [actions.MEASUREMENT_DATA_RECEIVED]: measurementDataRecevied
 };
 
 export default (state = initialState, action) => {
