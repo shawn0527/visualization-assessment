@@ -9,6 +9,7 @@ const initialState = {
 
 
 const metricDataRecevied = (state, action) => {
+    debugger
   const { getLastKnownMeasurement } = action;
   const {
     metric,
