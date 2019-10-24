@@ -9,39 +9,48 @@ const client = createClient({
   url: "https://react.eogresources.com/graphql"
 });
 
-const queryMetricNames = `
+const queryAllMetrics = `
 query {
   getMetrics
 }
 `
 
-const getMetricNames = state => {
-  const { metrics } = state.measurement;
+const getAllMetrics = state => {
+  const allMetrics = state.data.allMetrics;
   return {
-    metrics
+    allMetrics
   };
 };
-
-
 
 export default () => {
   return (
     <Provider value={client}>
-      <Metrics />
+      <SearchSelection />
     </Provider>
   );
 };
 
-const Metrics = () => {
+const SearchSelection = () => {
   const dispatch = useDispatch();
-  const { metrics } = useSelector(
-    getMetricNames
+  const { allMetrics } = useSelector(
+    getAllMetrics
   );
 
   const [result] = useQuery({
-    query: queryMetricNames
+    query: queryAllMetrics
   }
   );
+
+  const handleChange = () => {
+    const searchBar = document.getElementById('selectedMetrics')?document.getElementById('selectedMetrics'):false
+    const selectedMetricsATags = searchBar?searchBar.getElementsByClassName('ui label'):[]
+    const selectedMetrics = []
+    for(let i=0; i<selectedMetricsATags.length; i++) {
+      selectedMetrics.push(selectedMetricsATags[i].innerText)
+    }
+    dispatch({ type: actions.SELECTED_METRICS_RECEIVED, selectedMetrics });
+    return selectedMetrics
+  }
 
   const { fetching, data, error } = result;
   useEffect(
@@ -51,19 +60,26 @@ const Metrics = () => {
         return;
       }
       if (!data) return;
-      const { getMetrics } = data;
-      dispatch({ type: actions.MEASUREMENT_DATA_RECEIVED, getMetrics });
+      const getAllMetrics = data.getMetrics;
+      dispatch({ type: actions.ALL_METRICS_DATA_RECEIVED, getAllMetrics });
     },
     [dispatch, data, error]
   );
 
   if (fetching) return <LinearProgress />;
-  const options = metrics.map((state, index) => ({
-    key: metrics[index],
+  const options = allMetrics.map((state, index) => ({
+    key: allMetrics[index],
     text: state,
-    value: metrics[index]
+    value: allMetrics[index]
   }));
+
   return (
-    <Dropdown style={{width: '36%'}} placeholder="Select..." fluid multiple search selection options={options} />
+    <Dropdown 
+    id="selectedMetrics" 
+    style={{width: '36%'}} 
+    placeholder="Select..." 
+    fluid multiple search selection 
+    options={options}
+    onChange = {handleChange} />
   );
 };

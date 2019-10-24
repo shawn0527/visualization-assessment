@@ -35,7 +35,7 @@ const App = props => (
       <Wrapper>
         <Header />
         <NowWhat />
-        {/* <ChartContainer /> */}
+        <ChartContainer />
         <ToastContainer />
       </Wrapper>
     </Provider>
