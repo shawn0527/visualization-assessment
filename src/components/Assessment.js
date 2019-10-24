@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions";
 import { Provider, createClient, useQuery } from "urql";
 // import { useGeolocation } from "react-use";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Chip from "./Chip";
+import { Dropdown } from 'semantic-ui-react';
+import { width } from "@material-ui/system";
 
 const client = createClient({
   url: "https://react.eogresources.com/graphql"
@@ -33,13 +35,18 @@ console.log(state.measurement)
   };
 };
 
+
+
 export default () => {
   return (
     <Provider value={client}>
       <Assessment />
+      <Dropdown placeholder="Select..." fluid multiple search selection options />
     </Provider>
   );
 };
+
+
 
 
 const Assessment = () => {
@@ -57,7 +64,7 @@ const Assessment = () => {
       metricName
     }
   });
-  console.log(result)
+
   const { fetching, data, error } = result;
   useEffect(
     () => {
@@ -76,6 +83,6 @@ const Assessment = () => {
   if (fetching) return <LinearProgress />;
 
   return (
-    <Chip label={`${metric} is ${value} ${unit}`}/>
+      <Chip label={`${metric} is ${value} ${unit}`}/>
   );
 };
