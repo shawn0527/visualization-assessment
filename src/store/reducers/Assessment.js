@@ -1,26 +1,13 @@
 import * as actions from "../actions";
 
 const initialState = {
-  metric: "",
-  at: null,
-  value: null,
-  unit: ""
+  metrics: []
 };
 
 const measurementDataRecevied = (state, action) => {
-  const { getLastKnownMeasurement } = action;
-  const {
-    metric,
-    at,
-    value,
-    unit
-  } = getLastKnownMeasurement;
-
+  const metrics = action.getMetrics;
   return {
-    metric,
-    at,
-    value,
-    unit
+    metrics
   };
 };
 
