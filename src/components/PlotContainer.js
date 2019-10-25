@@ -30,7 +30,6 @@ const PlotContainer = () => {
     const {fetching, data, error } = result;
 
     const selectedMetrics = useSelector(state => state.metric.selectedMetrics)
-    console.log(selectedMetrics)
 
     return(
         selectedMetrics.map(metric => <Plot key={metric} metric={metric} timeStamp={data.heartBeat}/>)

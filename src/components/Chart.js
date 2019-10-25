@@ -16,12 +16,20 @@ import {
 
 const Chart = (props) => {
   const data = props.data
+  const newData = data.map(e => {
+    return {
+      ...e,
+      at: new Date(e.at).toLocaleTimeString()
+    } 
+  })
+  console.log(newData)
+  
 
   return (
     <LineChart
       width={500}
       height={300}
-      data={data}
+      data={newData}
       margin={{
       top: 5,
       right: 30,
