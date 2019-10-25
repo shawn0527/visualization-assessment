@@ -14,7 +14,6 @@ const allMetricsDataRecevied = (state, action) => {
 };
 
 const selectedMetricsDataReceived = (state, action) => {
-  console.log(action)
   const selectedMetrics = action.selectedMetrics;
   return {
     ...state,

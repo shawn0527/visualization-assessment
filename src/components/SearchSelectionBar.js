@@ -9,14 +9,14 @@ const client = createClient({
   url: "https://react.eogresources.com/graphql"
 });
 
-const queryAllMetrics = `
+const query = `
 query {
   getMetrics
 }
 `
 
 const getAllMetrics = state => {
-  const allMetrics = state.data.allMetrics;
+  const allMetrics = state.metric.allMetrics;
   return {
     allMetrics
   };
@@ -37,7 +37,7 @@ const SearchSelection = () => {
   );
 
   const [result] = useQuery({
-    query: queryAllMetrics
+    query
   }
   );
 

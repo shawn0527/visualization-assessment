@@ -1,63 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Provider, createClient, useQuery } from 'urql';
-import * as actions from '../store/actions'
+import React from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend
+} from 'recharts'
 
-const client = createClient({
-    url: "https://react.eogresources.com/graphql"
-})
+// const getPlots = state => {
+//     const { plots } = state.plots
+// }
 
-const plotQuery = `
-query($input: MeasurementQuery) {
-    getMeasurements(input: $input) {
-        metric
-        at
-        value
-        unit
-    }
+
+const Chart = (props) => {
+  const data = props.data
+
+  return (
+    <LineChart
+      width={500}
+      height={300}
+      data={data}
+      margin={{
+      top: 5,
+      right: 30,
+      left: 20,
+      bottom: 5
+    }}>
+      <CartesianGrid strokeDasharray="3 3"/>
+      <XAxis dataKey="at"/>
+      <YAxis unit={data[0].unit} type="number" domain={['auto','auto']} />
+      <Tooltip/>
+      <Legend/>
+      <Line
+        type="monotone"
+        dataKey="value"
+        stroke="#8884d8"
+        dot={false}
+        name={data[0].metric}
+        />
+      {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d"/> */}
+    </LineChart>
+  );
 }
-`
 
-export default props => {
-    return (
-    <Provider value={client}>
-        <Chart metric={props.metric} />
-    </Provider>
-    )
-}
-
-const Chart = props => {
-    const [metric, setMetric] = useState(props);
-    const currentTime = Date.now()
-    const input = {
-        metricName: props.metric,
-        after: currentTime-1000,
-        before: currentTime
-    };
-
-    const [result] = useQuery({
-        query: plotQuery,
-        variables: { input }
-    });
-
-    const { fetching, data, error } = result;
-    const dispatch = useDispatch()
-    console.log(data)
-    // useEffect(
-    //   () => {
-    //     if (error) {
-    //         dispatch({ type: actions.API_ERROR, error: error.message });
-    //       return;
-    //     }
-    //     if (!data) return;
-    //     const { getMeasurements } = data;
-    //     dispatch({ type: actions.WEATHER_DATA_RECEIVED, getMeasurements });
-    //   },
-    //   [dispatch, data, error]
-    // );
-
-    
-    return (
-        <p>{props.metric}</p>
-    )
-}
+export default Chart
