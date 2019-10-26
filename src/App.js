@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Wrapper from "./components/Wrapper";
 import NowWhat from "./components/NowWhat";
 import PlotContainer from "./components/PlotContainer";
+import SearchSelectionBar from "./components/SearchSelectionBar"
 
 const store = createStore();
 const theme = createMuiTheme({
@@ -34,8 +35,8 @@ const App = props => (
     <Provider store={store}>
       <Wrapper>
         <Header />
+        <SearchSelectionBar />
         <NowWhat />
-        <PlotContainer />
         <ToastContainer />
       </Wrapper>
     </Provider>

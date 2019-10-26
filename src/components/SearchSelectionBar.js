@@ -4,6 +4,7 @@ import * as actions from "../store/actions";
 import { Provider, createClient, useQuery } from "urql";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { Dropdown } from 'semantic-ui-react';
+import PlotContainer from './PlotContainer'
 
 const client = createClient({
   url: "https://react.eogresources.com/graphql"
@@ -31,10 +32,12 @@ export default () => {
 };
 
 const SearchSelection = () => {
+
   const dispatch = useDispatch();
   const { allMetrics } = useSelector(
     getAllMetrics
   );
+  const selectedMetrics = useSelector(state=>state.metric.selectedMetrics)
 
   const [result] = useQuery({
     query
@@ -43,13 +46,20 @@ const SearchSelection = () => {
 
   const handleChange = () => {
     const searchBar = document.getElementById('selectedMetrics')?document.getElementById('selectedMetrics'):false
-    const selectedMetricsATags = searchBar?searchBar.getElementsByClassName('ui label'):[]
-    const selectedMetrics = []
-    for(let i=0; i<selectedMetricsATags.length; i++) {
-      selectedMetrics.push(selectedMetricsATags[i].innerText)
-    }
-    dispatch({ type: actions.SELECTED_METRICS_RECEIVED, selectedMetrics });
-    return selectedMetrics
+    
+    setTimeout(()=>{
+      const selectedMetricsATags = searchBar?searchBar.getElementsByClassName('ui label'):[]
+      const selectedMetrics = []
+      if(selectedMetricsATags.length === 0) {
+        dispatch({ type: actions.SELECTED_METRICS_RECEIVED, selectedMetrics })
+      }
+
+      for(let i=0; i<selectedMetricsATags.length; i++) {
+        selectedMetrics.push(selectedMetricsATags[i].innerText)
+        dispatch({ type: actions.SELECTED_METRICS_RECEIVED, selectedMetrics })
+      };
+      return selectedMetrics
+    }, 100)
   }
 
   const { fetching, data, error } = result;
@@ -67,19 +77,21 @@ const SearchSelection = () => {
   );
 
   if (fetching) return <LinearProgress />;
-  const options = allMetrics.map((state, index) => ({
-    key: allMetrics[index],
-    text: state,
-    value: allMetrics[index]
+  const options = allMetrics.map((metric, index) => ({
+    text: metric,
+    // text: state,
+    value: index+1
   }));
 
   return (
-    <Dropdown 
-    id="selectedMetrics" 
-    style={{width: '36%'}} 
-    placeholder="Select..." 
-    fluid multiple search selection 
-    options={options}
-    onChange = {handleChange} />
+    <div style = {{width: '36%'}}>
+      <Dropdown 
+        id="selectedMetrics" 
+        style={{width: '100%'}} 
+        placeholder="Select..." 
+        fluid multiple search selection 
+        options={options} onChange={handleChange} />
+      <PlotContainer selectedMetrics={selectedMetrics}/>
+    </div>
   );
 };

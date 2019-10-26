@@ -22,7 +22,6 @@ const Chart = (props) => {
       at: new Date(e.at).toLocaleTimeString()
     } 
   })
-  console.log(newData)
   
 
   return (

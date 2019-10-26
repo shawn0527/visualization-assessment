@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions";
 import { Provider, createClient, useQuery } from "urql";
@@ -13,23 +13,23 @@ query {
     heartBeat
 }`
 
-export default () => {
+export default (props) => {
     return (
         <Provider value={client}>
-            <PlotContainer />
+            <PlotContainer {...props}/>
         </Provider>
     )
 }
 
-const PlotContainer = () => {
-
+const PlotContainer = (props) => {
     const [result] = useQuery({
         query
     });
 
     const {fetching, data, error } = result;
 
-    const selectedMetrics = useSelector(state => state.metric.selectedMetrics)
+    const selectedMetrics = props.selectedMetrics || []
+
 
     return(
         selectedMetrics.map(metric => <Plot key={metric} metric={metric} timeStamp={data.heartBeat}/>)

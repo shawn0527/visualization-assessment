@@ -4,7 +4,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";
 import Weather from "./Weather";
-import SearchSelectionBar from "./SearchSelectionBar";
 
 const useStyles = makeStyles({
   grow: {
@@ -23,8 +22,7 @@ export default () => {
           {name} EOG React Visualization Assessment
         </Typography>
         <Weather />
-        <SearchSelectionBar />
-      </Toolbar>
+     </Toolbar>
     </AppBar>
   );
 };
