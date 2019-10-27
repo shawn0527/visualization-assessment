@@ -9,11 +9,6 @@ import {
   Legend
 } from 'recharts'
 
-// const getPlots = state => {
-//     const { plots } = state.plots
-// }
-
-
 const Chart = (props) => {
   const data = props.data
   const newData = data.map(e => {
@@ -47,7 +42,6 @@ const Chart = (props) => {
         dot={false}
         name={data[0].metric}
         />
-      {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d"/> */}
     </LineChart>
   );
 }

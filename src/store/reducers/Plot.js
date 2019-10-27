@@ -2,39 +2,23 @@ import * as actions from "../actions";
 
 const initialState = {
   allPlots: [],
-  lastPlot: {},
-  currentTime: 0
+  livePlots: {}
 };
 
-const historicalDataRecevied = (state, action) => {
-  const allPlots = action.historicalData;
+const allDataRecevied = (state, action) => {
+  const allPlots = action.getMeasurements;
+  const newMeasurement = allPlots[allPlots.length-1];
+  const metricName = newMeasurement.metric
+  const livePlots = state.livePlots
+  livePlots[metricName] = newMeasurement
   return {
-    ...state,
+    livePlots,
     allPlots
   };
 };
 
-const currentTimeReceived = (state, action) => {
-  const currentTime = action.currentTime;
-  return {
-    ...state,
-    currentTime
-  };
-};
-
-const lastPlotReceived = (state, action) => {
-  console.log(action)
-  const lastPlot = action.lastPlot
-  return {
-    ...state,
-    lastPlot
-  }
-}
-
 const handlers = {
-  [actions.HISTORICAL_DATA_RECEIVED]: historicalDataRecevied,
-  [actions.CURRENT_TIME]: currentTimeReceived,
-  [actions.LAST_KNOWN_PLOT]: lastPlotReceived
+  [actions.ALL_DATA_RECEIVED]: allDataRecevied
 };
 
 export default (state = initialState, action) => {

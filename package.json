@@ -27,6 +27,7 @@
     "redux": "^4.0.1",
     "redux-saga": "^1.0.3",
     "semantic-ui-react": "^0.88.1",
+    "subscriptions-transport-ws": "^0.9.16",
     "urql": "^1.1.1"
   },
   "scripts": {

@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions";
 import { Provider, createClient, useQuery } from "urql";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { Dropdown } from 'semantic-ui-react';
-import PlotContainer from './PlotContainer'
+import { Dropdown } from "semantic-ui-react";
+import LiveBoxContainer from "./LiveBoxContainer"
+import PlotContainer from "./PlotContainer"
 
 const client = createClient({
   url: "https://react.eogresources.com/graphql"
@@ -37,31 +38,25 @@ const SearchSelection = () => {
   const { allMetrics } = useSelector(
     getAllMetrics
   );
-  const selectedMetrics = useSelector(state=>state.metric.selectedMetrics)
-
   const [result] = useQuery({
     query
-  }
-  );
-
+  });
   const handleChange = () => {
     const searchBar = document.getElementById('selectedMetrics')?document.getElementById('selectedMetrics'):false
-    
     setTimeout(()=>{
       const selectedMetricsATags = searchBar?searchBar.getElementsByClassName('ui label'):[]
       const selectedMetrics = []
       if(selectedMetricsATags.length === 0) {
         dispatch({ type: actions.SELECTED_METRICS_RECEIVED, selectedMetrics })
       }
-
       for(let i=0; i<selectedMetricsATags.length; i++) {
         selectedMetrics.push(selectedMetricsATags[i].innerText)
         dispatch({ type: actions.SELECTED_METRICS_RECEIVED, selectedMetrics })
       };
       return selectedMetrics
-    }, 100)
+    }, 1)
   }
-
+  
   const { fetching, data, error } = result;
   useEffect(
     () => {
@@ -79,7 +74,6 @@ const SearchSelection = () => {
   if (fetching) return <LinearProgress />;
   const options = allMetrics.map((metric, index) => ({
     text: metric,
-    // text: state,
     value: index+1
   }));
 
@@ -91,7 +85,8 @@ const SearchSelection = () => {
         placeholder="Select..." 
         fluid multiple search selection 
         options={options} onChange={handleChange} />
-      <PlotContainer selectedMetrics={selectedMetrics}/>
+        <LiveBoxContainer />
+        <PlotContainer />
     </div>
   );
 };

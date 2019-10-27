@@ -8,8 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import Wrapper from "./components/Wrapper";
 import NowWhat from "./components/NowWhat";
-import PlotContainer from "./components/PlotContainer";
-import SearchSelectionBar from "./components/SearchSelectionBar"
+import SearchSelectionBar from "./components/SearchSelectionBar";
 
 const store = createStore();
 const theme = createMuiTheme({
