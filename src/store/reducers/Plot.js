@@ -1,15 +1,17 @@
 import * as actions from "../actions";
 
 const initialState = {
-  allPlots: [],
+  allPlots: {},
   livePlots: {}
 };
 
 const allDataRecevied = (state, action) => {
-  const allPlots = action.getMeasurements;
-  const newMeasurement = allPlots[allPlots.length-1];
+  const currentPlots = action.getMeasurements;
+  const newMeasurement = currentPlots[currentPlots.length-1];
   const metricName = newMeasurement.metric
   const livePlots = state.livePlots
+  const allPlots = state.allPlots
+  allPlots[metricName] = currentPlots
   livePlots[metricName] = newMeasurement
   return {
     livePlots,
