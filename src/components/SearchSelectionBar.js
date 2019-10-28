@@ -6,7 +6,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { Dropdown } from "semantic-ui-react";
 import LiveBoxContainer from "./LiveBoxContainer";
 import PlotContainer from "./PlotContainer";
-import Chart from "./Chart"
+// import Chart from "./Chart"
 // import Multiselect from "multiselect-dropdown-react";
 
 const client = createClient({
