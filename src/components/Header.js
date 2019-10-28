@@ -22,7 +22,7 @@ export default () => {
           {name} EOG React Visualization Assessment
         </Typography>
         <Weather />
-     </Toolbar>
+      </Toolbar>
     </AppBar>
   );
 };
