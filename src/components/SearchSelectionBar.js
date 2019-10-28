@@ -6,8 +6,6 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { Dropdown } from "semantic-ui-react";
 import LiveBoxContainer from "./LiveBoxContainer";
 import PlotContainer from "./PlotContainer";
-// import Chart from "./Chart"
-// import Multiselect from "multiselect-dropdown-react";
 
 const client = createClient({
   url: "https://react.eogresources.com/graphql"
@@ -89,13 +87,6 @@ const SearchSelection = () => {
         options={options}
         onChange={handleChange}
       />
-      {/* <Multiselect
-        id="selectedMetrics"
-        style={{ width: "100%" }}
-        placeholder="Select..."
-        options={options}
-        onSelectOptions={handleSelect}
-      /> */}
       <LiveBoxContainer />
       <PlotContainer />
     </div>

@@ -39,53 +39,66 @@ const Chart = () => {
     }
 
     newPlots.map(e => {
-      return e['time'] = new Date(e.time).toLocaleTimeString()
+      return (e["time"] = new Date(e.time).toLocaleTimeString());
     });
   }
 
-  const YAxisList = []
-  if(selectedMetrics.length !== 0) {
-    if(!!allPlots[selectedMetrics[0]])
-    YAxisList.push(<YAxis  unit={allPlots[selectedMetrics[0]][0].unit} domain={["auto", "auto"]} />);
-    if(!!allPlots[selectedMetrics[1]])
-    YAxisList.push(<YAxis unit={allPlots[selectedMetrics[1]][0].unit} domain={["auto", "auto"]} />);
+  //Multiple y axises showing on same chart
+  const YAxisList = [];
+  const lines = [];
+  const colors = {
+    tubingPressure: "#8884d8",
+    flareTemp: "#33FFEC",
+    injValveOpen: "#078FE8",
+    oilTemp: "#E807B9",
+    casingPressure: "#F84462",
+    waterTemp: "#66DE18"
+  };
+  if (selectedMetrics.length !== 0) {
+    for (let i = 0; i < selectedMetrics.length; i++) {
+      if (!!allPlots[selectedMetrics[i]])
+        YAxisList.push(
+          <YAxis
+            key={i}
+            yAxisId={selectedMetrics[i]}
+            unit={allPlots[selectedMetrics[i]][0].unit}
+            domain={["auto", "auto"]}
+          />
+        );
+      lines.push(
+        <Line
+          key={i}
+          yAxisId={selectedMetrics[i]}
+          type="monotone"
+          dataKey={selectedMetrics[i]}
+          stroke={colors[selectedMetrics[i]]}
+          dot={false}
+          name={selectedMetrics[i]}
+        />
+      );
+    }
   }
-  console.log(YAxisList)
 
-  return (
-  selectedMetrics.length !== 0 && !!allPlots[selectedMetrics[0]]?
-  <LineChart
-    width={500}
-    height={300}
-    data={newPlots}
-    margin={{
-      top: 5,
-      right: 30,
-      left: 20,
-      bottom: 5
-    }}
-  >
-    <CartesianGrid strokeDasharray="3 3" />
-    <XAxis dataKey="time" />
-    {YAxisList.map(e=>e)}
-    <Tooltip />
-    <Legend />
-    {selectedMetrics[0]?<Line
-      type="monotone"
-      dataKey={selectedMetrics[0]}
-      stroke="#8884d8"
-      dot={false}
-      name={selectedMetrics[0]}
-    />:null}
-    {selectedMetrics[1]?<Line
-      type="monotone"
-      dataKey={selectedMetrics[1]}
-      stroke="red"
-      dot={false}
-      name={selectedMetrics[1]}
-    />:null}
-  </LineChart>
-  :null)
+  return selectedMetrics.length !== 0 && !!allPlots[selectedMetrics[0]] ? (
+    <LineChart
+      width={1000}
+      height={600}
+      data={newPlots}
+      margin={{
+        top: 5,
+        right: 50,
+        left: 50,
+        bottom: 5
+      }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="time" />
+      {YAxisList.map(e => e)}
+      <Tooltip />
+      <Legend />
+      {lines.map(e => e)}
+    </LineChart>
+  ) : null;
 };
 
 export default Chart;
