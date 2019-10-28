@@ -10,4 +10,4 @@ some npm may need to be added:
 "underscore" for group array of objects by object's property
 
 Only "tubingPressure" and "oilTemp" have lived measuremts
-Limited by local desktop computing ability, I recommend at most two metrics at same time, or it may cause frozen.
+Limited by local desktop computing ability, I recommend at most two metrics at the sametime, or it may cause frozen.
