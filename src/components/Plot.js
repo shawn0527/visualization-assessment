@@ -16,7 +16,7 @@ const subscriptionClient = new SubscriptionClient(
   "ws://react.eogresources.com/graphql",
   {
     reconnect: true,
-    timeout: 200000
+    timeout: 20000
   }
 );
 const client = createClient({
