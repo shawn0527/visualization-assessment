@@ -6,17 +6,19 @@ const initialState = {
 };
 
 const allDataRecevied = (state, action) => {
-  const currentPlots = action.getMeasurements;
-  const newMeasurement = currentPlots[currentPlots.length-1];
-  const metricName = newMeasurement.metric
+  const currentPlots = action.currentPlots;
   const livePlots = state.livePlots
   const allPlots = state.allPlots
-  allPlots[metricName] = currentPlots
-  livePlots[metricName] = newMeasurement
+  if(!!currentPlots) {
+    const newMeasurement = currentPlots[currentPlots.length-1];
+    const metricName = newMeasurement.metric
+    allPlots[metricName] = currentPlots
+    livePlots[metricName] = newMeasurement
+  };
   return {
     livePlots,
     allPlots
-  };
+  }
 };
 
 const handlers = {

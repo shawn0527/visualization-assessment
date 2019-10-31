@@ -61,10 +61,10 @@ query($input: [MeasurementQuery]){
 }
 `;
 
-export default () => {
+export default props => {
   return (
     <Provider value={client}>
-      <Plot />
+      <Plot {...props} />
     </Provider>
   );
 };
@@ -100,8 +100,7 @@ const Plot = () => {
       const newPlot = response.newMeasurement
       selectedMetrics.map(metricName => {
         const currentPlots = allPlots[metricName]
-        if(newPlot.metric === metricName) {
-          const currentPlots = allPlots[metricName]
+        if(newPlot.metric === metricName && currentPlots !== undefined) {
           currentPlots.push(newPlot)
           allPlots[metricName] = currentPlots
           dispatch({ type: actions.ALL_DATA_RECEIVED, currentPlots})
