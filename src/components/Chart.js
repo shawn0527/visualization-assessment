@@ -12,7 +12,7 @@ import {
 import _ from "underscore";
 
 const Chart = () => {
-  const allPlots = useSelector(state => state.plot.allPlots);
+  const allPlots = useSelector(state=>state.plot.allPlots)
   const selectedMetrics = useSelector(state => state.metric.selectedMetrics);
 
   const newData = [];
@@ -20,10 +20,12 @@ const Chart = () => {
   if (selectedMetrics.length !== 0 && !!allPlots[selectedMetrics[0]]) {
     for (let obj in allPlots) {
       allPlots[obj].forEach(plot => {
+        if(!!plot) {
         const newPlot = {};
         newPlot["time"] = plot.at;
         newPlot[plot.metric] = plot.value;
         newData.push(newPlot);
+        }
       });
     }
 
@@ -56,7 +58,7 @@ const Chart = () => {
   };
   if (selectedMetrics.length !== 0) {
     for (let i = 0; i < selectedMetrics.length; i++) {
-      if (!!allPlots[selectedMetrics[i]])
+      if (allPlots[selectedMetrics[i]] !== undefined)
         YAxisList.push(
           <YAxis
             key={i}

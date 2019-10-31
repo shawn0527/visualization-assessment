@@ -6,7 +6,8 @@ const initialState = {
 };
 
 const allDataRecevied = (state, action) => {
-  const currentPlots = action.getMeasurements;
+  console.log(action)
+  const currentPlots = action.currentPlots;
   const newMeasurement = currentPlots[currentPlots.length-1];
   const metricName = newMeasurement.metric
   const livePlots = state.livePlots
